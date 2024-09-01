@@ -1,8 +1,29 @@
 .option-container {
-  height: 50px;
+  height: 60px;
   width: 500px;
+  margin: 30px 0;
   background-color: yellow;
   display: flex;
+  align-items: center;
+}
+.game-board {
+    width: 200px;
+    height: 200px;
+    display: flex; /* display items within a flex */
+    flex-wrap: wrap; /* make the items multi line */
+}
+
+#game-board-container {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.block {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    box-sizing: border-box;
 }
 
 .destroyer {
