@@ -5,9 +5,9 @@ Dev design
 
 Tech stack
 
-HTML5
-JavaScript
-CSS
+* HTML5
+* JavaScript
+* CSS
 
 Current progress
 
