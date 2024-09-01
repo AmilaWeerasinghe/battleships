@@ -11,5 +11,5 @@ CSS
 
 Current progress
 
-![milestone1] (./milestone1.png)
+![milestone1](milestone1.png)
 
