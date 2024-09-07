@@ -16,8 +16,10 @@ const flip = () => {
   });
 }
 
+flipButton.addEventListener('click', flip);
+
 //creating boards
-const width = 10;
+const width = 10; // value required figure out the blocks the color based on the length of the ship
 
 const createBoard = (color,id) => {
   const gameBoardContainer = document.createElement('div'); // create a new div element
@@ -41,4 +43,52 @@ const createBoard = (color,id) => {
 createBoard('lightblue', 'player');
 createBoard('pink', 'computer');
 
-flipButton.addEventListener('click', flip);
+// creating ships
+
+class Ship {
+  constructor(name, length) {
+    this.name = name;
+    this.length = length;
+  }
+}
+
+const destroyer = new Ship('destroyer', 2);
+const submarine = new Ship('submarine', 3);
+const cruiser = new Ship('cruiser', 3);
+const battleship = new Ship('battleship', 4);
+const carrier = new Ship('carrier', 5);
+
+const ships = [destroyer, submarine, cruiser, battleship, carrier];
+
+const addShipPiece =  (ship) => {
+  const allBoardBlocks = document.querySelectorAll('#computer div')
+
+  let randomBoolean = Math.random() < 0.5;
+  let isHorizontal = randomBoolean;
+
+  // generate random index
+  let randomStartIndex = Math.floor(Math.random() * width * width);
+
+  let shipBlocks = [];
+
+  // check if the random index is valid
+
+  for (let i = 0; i < ship.length; i++) {
+    if ( isHorizontal ) {
+      // figure out the indexes to color with passed ship
+      // push to shipBlocks array
+      shipBlocks.push(allBoardBlocks[Number(randomStartIndex) + i])
+    } else {
+      // figure out the indexes to color with passed ship
+      // push to shipBlocks array
+      shipBlocks.push(allBoardBlocks[Number(randomStartIndex) + i * width])
+    }
+  }
+
+  shipBlocks.forEach ( shipBlock => {
+    shipBlock.classList.add(ship.name)
+    shipBlock.classList.add('taken');// mark the div of block is taken
+  })
+}
+
+ships.forEach(ship => addShipPiece(ship));

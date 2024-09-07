@@ -2,6 +2,8 @@ Dev design
 1. create and render the initial elements with game board. blocks and the ships
 2. Control ships with directions
 3. Add two board to player and computer
+4. Create the game board 
+5. Add the different ships randomly into the game board , vertically / horizontally in random manner
 
 Tech stack
 
@@ -11,5 +13,7 @@ Tech stack
 
 Current progress
 
-![milestone1](milestone1.png)
+![milestone2](milestone2.png)
+
+
 
