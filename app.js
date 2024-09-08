@@ -59,22 +59,25 @@ const battleship = new Ship('battleship', 4);
 const carrier = new Ship('carrier', 5);
 
 const ships = [destroyer, submarine, cruiser, battleship, carrier];
+let notDropped;
 
-const addShipPiece =  (ship) => {
-  const allBoardBlocks = document.querySelectorAll('#computer div')
+const addShipPiece =  (user, ship, startId) => {
+  const allBoardBlocks = document.querySelectorAll(`#${user} div`)
 
   let randomBoolean = Math.random() < 0.5;
-  let isHorizontal = randomBoolean;
+  let isHorizontal = user=== 'player' ? angle ===0 : randomBoolean ;
 
   // generate random index
   let randomStartIndex = Math.floor(Math.random() * width * width);
 
+  let startIndex = startId || randomStartIndex;
+
   // check if the random index is valid start
-  let validStart = isHorizontal ? randomStartIndex <= width * width - ship.length ? randomStartIndex : 
+  let validStart = isHorizontal ? startIndex <= width * width - ship.length ? startIndex : 
   width * width - ship.length :
   // handle vertical case
-  randomStartIndex <= width * width - width * ship.length ? randomStartIndex : 
-  randomStartIndex - ship.length * width + width;
+  startIndex <= width * width - width * ship.length ? startIndex : 
+  startIndex - ship.length * width + width;
 
   let shipBlocks = [];
 
@@ -118,21 +121,50 @@ const addShipPiece =  (ship) => {
     })
   } else {
     // if not valid we will re-run the function till the ships are placed in a valid place
-    addShipPiece(ship);
+    if(user==='computer') addShipPiece(ship); 
+    if(user==='player') notDropped = true; //put the ship piece back to the options container
   }
   
 }
 
-ships.forEach(ship => addShipPiece(ship));
+ships.forEach(ship => addShipPiece('computer', ship));// for computer the startId is not provided
 
 
 // drag player ships
-
+let draggedShip; 
 const dragStart = (e) => {
-  console.log(e.target)
+  console.log('dragStart')
+  notDropped= false;
+  draggedShip = e.target;
+}
+
+const dragOver = (e) => {
+  console.log('dragOver')
+  e.preventDefault();
+}
+
+const dropShip = (e) => {
+  console.log('dropShip')
+  const startId = e.target.id;
+  const ship = ships[draggedShip.id];
+
+  addShipPiece('player', ship, startId);// for player the startId is provided
+  if ( !notDropped ) {
+    draggedShip.remove();
+  }
 }
 
 const optionShips = Array.from(optionContainer.children);
-optionShips.forEach(optionShip => 
-  optionShip.addEventListener('dragstart', dragStart))
+optionShips.forEach(optionShip => {
+  optionShip.setAttribute('draggable', true)
+  optionShip.addEventListener('dragstart', dragStart)
+}
+)
+
+const allPlayerBlocks = document.querySelectorAll('#player div');
+allPlayerBlocks.forEach(playerBlock => {
+  playerBlock.addEventListener('dragover', dragOver)
+  playerBlock.addEventListener('drop', dropShip)
+}
+)
 
