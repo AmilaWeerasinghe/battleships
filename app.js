@@ -124,3 +124,15 @@ const addShipPiece =  (ship) => {
 }
 
 ships.forEach(ship => addShipPiece(ship));
+
+
+// drag player ships
+
+const dragStart = (e) => {
+  console.log(e.target)
+}
+
+const optionShips = Array.from(optionContainer.children);
+optionShips.forEach(optionShip => 
+  optionShip.addEventListener('dragstart', dragStart))
+
