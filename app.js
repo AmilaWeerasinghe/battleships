@@ -69,6 +69,13 @@ const addShipPiece =  (ship) => {
   // generate random index
   let randomStartIndex = Math.floor(Math.random() * width * width);
 
+  // check if the random index is valid start
+  let validStart = isHorizontal ? randomStartIndex <= width * width - ship.length ? randomStartIndex : 
+  width * width - ship.length :
+  // handle vertical case
+  randomStartIndex <= width * width - width * ship.length ? randomStartIndex : 
+  randomStartIndex - ship.length * width + width;
+
   let shipBlocks = [];
 
   // check if the random index is valid
@@ -77,11 +84,11 @@ const addShipPiece =  (ship) => {
     if ( isHorizontal ) {
       // figure out the indexes to color with passed ship
       // push to shipBlocks array
-      shipBlocks.push(allBoardBlocks[Number(randomStartIndex) + i])
+      shipBlocks.push(allBoardBlocks[Number(validStart) + i])
     } else {
       // figure out the indexes to color with passed ship
       // push to shipBlocks array
-      shipBlocks.push(allBoardBlocks[Number(randomStartIndex) + i * width])
+      shipBlocks.push(allBoardBlocks[Number(validStart) + i * width])
     }
   }
 
