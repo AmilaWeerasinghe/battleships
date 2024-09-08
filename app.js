@@ -92,10 +92,35 @@ const addShipPiece =  (ship) => {
     }
   }
 
-  shipBlocks.forEach ( shipBlock => {
-    shipBlock.classList.add(ship.name)
-    shipBlock.classList.add('taken');// mark the div of block is taken
-  })
+  let valid;
+
+  // validations to check if the ship can be placed in the board
+  // without going into multiple lines
+  if ( isHorizontal ) {
+    shipBlocks.every((_shipBlock, index) =>
+      valid  = shipBlocks[0].id % width - ( shipBlocks.length - ( index + 1))
+    )
+  } else {
+    //handle vertical
+    shipBlocks.every((_shipBlock, index) =>
+      valid = shipBlocks[0].id < 99 + ( width * index + 1 )
+    )
+  }
+
+  //validations to check the block is already not taken
+  const notTaken = shipBlocks.every(shipBlock => !shipBlock.classList.contains('taken'))
+  
+
+  if ( valid && notTaken) {
+    shipBlocks.forEach ( shipBlock => {
+      shipBlock.classList.add(ship.name)
+      shipBlock.classList.add('taken');// mark the div of block is taken
+    })
+  } else {
+    // if not valid we will re-run the function till the ships are placed in a valid place
+    addShipPiece(ship);
+  }
+  
 }
 
 ships.forEach(ship => addShipPiece(ship));
