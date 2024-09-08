@@ -13,7 +13,7 @@ Tech stack
 
 Current progress
 
-![milestone2](milestone2.png)
+![milestone3](milestone3.png)
 
 
 
