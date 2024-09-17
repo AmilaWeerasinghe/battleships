@@ -1,9 +1,12 @@
 const flipButton  = document.querySelector('#flip-button'); // query through whole document to find the element
+const startButton = document.querySelector('#start-button');
 
 const optionContainer = document.querySelector('.option-container'); 
 
 
 const gamesBoardContainer = document.querySelector('#game-board-container');
+const infoDisplay = document.querySelector('#info');
+const turnDisplay = document.querySelector('#turn-display');
 
 // options choosing
 let angle = 0;
@@ -191,3 +194,30 @@ const highlightArea = (startIndex, ship) => {
   }
 }
 
+// game logic
+let gameover = false;
+let playerTurn = true;
+
+// handle click event
+const handleClick = (e) => {
+  if ( !gameover ) {
+    if( e.target.classList.contains('taken')){
+      e.target.classList.add('boom');
+      infoDisplay.textContent = 'You hit the computers ship';
+    }
+  }
+}
+
+// Start the game
+
+const startGame = () => {
+  //start game if all pieces are on the board
+  if(optionContainer.children.length !== 0){
+    infoDisplay.textContent = 'Please place all ships on the board';
+  } else {
+    const allBoardBlocks = document.querySelectorAll('#computer div');
+    allBoardBlocks.forEach((block) => block.addEventListener('click', handleClick))
+  }
+}
+
+startButton.addEventListener('click', startGame);
