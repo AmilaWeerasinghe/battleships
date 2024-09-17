@@ -61,17 +61,8 @@ const carrier = new Ship('carrier', 5);
 const ships = [destroyer, submarine, cruiser, battleship, carrier];
 let notDropped;
 
-const addShipPiece =  (user, ship, startId) => {
-  const allBoardBlocks = document.querySelectorAll(`#${user} div`)
 
-  let randomBoolean = Math.random() < 0.5;
-  let isHorizontal = user=== 'player' ? angle ===0 : randomBoolean ;
-
-  // generate random index
-  let randomStartIndex = Math.floor(Math.random() * width * width);
-
-  let startIndex = startId || randomStartIndex;
-
+const getValidity = (allBoardBlocks, isHorizontal, startIndex, ship) => {
   // check if the random index is valid start
   let validStart = isHorizontal ? startIndex <= width * width - ship.length ? startIndex : 
   width * width - ship.length :
@@ -112,7 +103,23 @@ const addShipPiece =  (user, ship, startId) => {
 
   //validations to check the block is already not taken
   const notTaken = shipBlocks.every(shipBlock => !shipBlock.classList.contains('taken'))
-  
+
+  return { shipBlocks, valid, notTaken }
+
+}
+
+const addShipPiece =  (user, ship, startId) => {
+  const allBoardBlocks = document.querySelectorAll(`#${user} div`)
+
+  let randomBoolean = Math.random() < 0.5;
+  let isHorizontal = user=== 'player' ? angle ===0 : randomBoolean ;
+
+  // generate random index
+  let randomStartIndex = Math.floor(Math.random() * width * width);
+
+  let startIndex = startId || randomStartIndex;
+
+  const {shipBlocks, valid, notTaken} = getValidity(allBoardBlocks, isHorizontal, startIndex, ship);
 
   if ( valid && notTaken) {
     shipBlocks.forEach ( shipBlock => {
@@ -121,7 +128,7 @@ const addShipPiece =  (user, ship, startId) => {
     })
   } else {
     // if not valid we will re-run the function till the ships are placed in a valid place
-    if(user==='computer') addShipPiece(ship); 
+    if(user==='computer') addShipPiece(user,ship, startId); 
     if(user==='player') notDropped = true; //put the ship piece back to the options container
   }
   
@@ -141,6 +148,8 @@ const dragStart = (e) => {
 const dragOver = (e) => {
   console.log('dragOver')
   e.preventDefault();
+  const ship= ships[draggedShip.id];
+  highlightArea(e.target.id, ship);
 }
 
 const dropShip = (e) => {
@@ -167,4 +176,18 @@ allPlayerBlocks.forEach(playerBlock => {
   playerBlock.addEventListener('drop', dropShip)
 }
 )
+
+const highlightArea = (startIndex, ship) => {
+  const allBoardBlocks = document.querySelectorAll('#player div');
+  let isHorizontal = angle === 0;
+
+  const {shipBlocks, valid , notTaken } = getValidity(allBoardBlocks, isHorizontal, startIndex, ship);
+
+  if ( valid && notTaken ) {
+    shipBlocks.forEach(shipBlock => {
+      shipBlock.classList.add('hover')
+      setTimeout(() => shipBlock.classList.remove('hover'), 500)
+    })
+  }
+}
 

@@ -75,3 +75,14 @@
   margin: 3px;
 }
 
+.hover {
+  background-color: grey;
+}
+
+.boom {
+  background-color: orange
+}
+
+.empty {
+  background-color: white;
+}
