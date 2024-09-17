@@ -198,12 +198,19 @@ const highlightArea = (startIndex, ship) => {
 let gameover = false;
 let playerTurn = true;
 
+let playerHits = [];
+let computerHits = [];
+
 // handle click event
 const handleClick = (e) => {
   if ( !gameover ) {
     if( e.target.classList.contains('taken')){
       e.target.classList.add('boom');
       infoDisplay.textContent = 'You hit the computers ship';
+      let classes = Array.from(e.target.classList);
+      classes = classes.filter(className => className !== 'block' && className !== 'taken' && className !== 'boom');
+      playerHits.push(...classes);
+      console.log(playerHits);
     }
   }
 }
