@@ -212,6 +212,15 @@ const handleClick = (e) => {
       playerHits.push(...classes);
       console.log(playerHits);
     }
+
+    if (!e.target.classList.contains('taken')) {
+      infoDisplay.textContent = 'Nothing hit this time.'
+      e.target.classList.add('empty')
+    }
+    playerTurn = false;
+    const allBoardBlocks = document.querySelectorAll('#computer div')
+    allBoardBlocks.forEach(block => block.replaceWith(block.cloneNode(true)));
+    setTimeout(computerTurn, 3000);
   }
 }
 
@@ -228,3 +237,43 @@ const startGame = () => {
 }
 
 startButton.addEventListener('click', startGame);
+
+// computer turn
+const computerTurn = () => {
+  if ( !gameover ) {
+    turnDisplay.textContent = 'Computer Turn!';
+    infoDisplay.textContent = 'The computer is thinking...';
+
+    setTimeout(() => {
+      let randomGo = Math.floor(Math.random() * width * width);
+      const allBoardBlocks = document.querySelectorAll('#player div');
+
+      if ( allBoardBlocks[randomGo].classList.contains('taken')&&
+        allBoardBlocks[randomGo].classList.contains('boom')) {
+          computerTurn();
+          return;
+        } else if (
+          allBoardBlocks[randomGo].classList.contains('taken') &&
+          !allBoardBlocks[randomGo].classList.contains('boom')
+        ) {
+          allBoardBlocks[randomGo].classList.add('boom');
+          infoDisplay.textContent = 'The computer hit your ship!';
+          let classes = Array.from(e.target.classList);
+          classes = classes.filter(className => className !== 'block' && className !== 'taken' && className !== 'boom');
+          computerHits.push(...classes);
+          console.log(computerHits);
+        } else {
+          infoDisplay.textContent = 'Nothing hit this time.';
+          allBoardBlocks[randomGo].classList.add('empty');
+        }
+    },3000)
+
+    setTimeout(() => {
+      playerTurn = true;
+      turnDisplay.textContent = 'Your Turn!';
+      infoDisplay.textContent = 'Please take your turn.';
+      const allBoardBlocks = document.querySelectorAll('#computer div')
+      allBoardBlocks.forEach(block => block.addEventListener('click', handleClick))
+    }, 6000)
+  }
+}
