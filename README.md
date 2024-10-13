@@ -8,6 +8,9 @@ Dev design
 7. Add logic to player turn
 8. Add logic to computer turn
 9. Integrate player turn and computer turn
+10. Add logic to check the scores
+11. Added conditions to determine the wins
+12. Updated styles to hide computer ships
 
 Tech stack
 
@@ -17,7 +20,7 @@ Tech stack
 
 Current progress
 
-![milestone3](milestone4.png)
+![milestone3](milestone5.png)
 
 
 

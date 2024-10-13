@@ -79,10 +79,18 @@
   background-color: grey;
 }
 
+#computer .destroyer,
+#computer .submarine,
+#computer .cruiser,
+#computer .battleship,
+#computer .carrier {
+  background-color: pink;
+}
+
 .boom {
-  background-color: orange
+  background-color: orange !important;
 }
 
 .empty {
-  background-color: white;
+  background-color: white !important;
 }
