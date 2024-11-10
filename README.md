@@ -1,4 +1,7 @@
 Dev design
+
+// FE - static single player game 
+
 1. create and render the initial elements with game board. blocks and the ships
 2. Control ships with directions
 3. Add two board to player and computer
@@ -12,11 +15,17 @@ Dev design
 11. Added conditions to determine the wins
 12. Updated styles to hide computer ships
 
+
+// Major update 02 - Node Js multiplayer mode
+
 Tech stack
 
 * HTML5
 * JavaScript
 * CSS
+* NodeJs
+* Express 
+* Socket io
 
 Current progress
 
