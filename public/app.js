@@ -1,5 +1,7 @@
 const flipButton  = document.querySelector('#flip-button'); // query through whole document to find the element
 const startButton = document.querySelector('#start-button');
+const singlePlayerButton = document.querySelector('#singlePlayerButton');
+const multiPlayerButton = document.querySelector('#multiPlayerButton');
 
 const optionContainer = document.querySelector('.option-container'); 
 
@@ -10,6 +12,10 @@ let ready = false;
 let enemyReady = false;
 let allShipsPlaced = false;
 let shotFired = -1;
+
+//Select player mode
+singlePlayerButton.addEventListener('click', startSinglePlayer);
+multiPlayerButton.addEventListener('click', startMultiPlayer);
 
 const socket = io(); // create a socket connection to node server
 
@@ -25,6 +31,20 @@ socket.on('player-number', num => {
   }
 
 })
+
+//single player function 
+// Use function declrations instead of function expressions to make sure its hoisted
+function startSinglePlayer () {
+  console.log('single player');
+  gameMode = 'singlePlayer';
+  startGame();
+}
+
+function startMultiPlayer (){
+  console.log('multi player');
+  gameMode = 'multiPlayer';
+  //emit the player number
+}
 
 const gamesBoardContainer = document.querySelector('#game-board-container');
 const infoDisplay = document.querySelector('#info');
