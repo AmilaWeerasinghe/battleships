@@ -25,7 +25,7 @@ Tech stack
 * CSS
 * NodeJs
 * Express 
-* Socket io
+* Socket.io
 
 Current progress
 
