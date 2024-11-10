@@ -3,6 +3,28 @@ const startButton = document.querySelector('#start-button');
 
 const optionContainer = document.querySelector('.option-container'); 
 
+// handle multiplayer node server
+let gameMode = "";
+let playerNumber = 0;
+let ready = false;
+let enemyReady = false;
+let allShipsPlaced = false;
+let shotFired = -1;
+
+const socket = io(); // create a socket connection to node server
+
+// get your player number
+socket.on('player-number', num => {
+  if(num === -1) {
+    infoDisplay.textContent = 'Sorry, the server is full';
+  } else {
+    playerNumber = parseInt(num); // number passed from socket io is a string
+    if(playerNumber === 1) currentPlayer = "enemy";
+
+    console.log(playerNumber);
+  }
+
+})
 
 const gamesBoardContainer = document.querySelector('#game-board-container');
 const infoDisplay = document.querySelector('#info');
